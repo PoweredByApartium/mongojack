@@ -581,13 +581,13 @@
   </scm>
 
   <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
+    <repository>
+      <id>nexus</id>
+      <url>https://nexus.voigon.dev/repository/apartium-releases</url>
+    </repository>
     <site>
       <id>github-project-site</id>
-      <url>scm:git:ssh://git@github.com/mongojack/mongojack.git</url>
+      <url>scm:git:ssh://git@github.com/poweredbyapartium/mongojack.git</url>
     </site>
   </distributionManagement>
 
