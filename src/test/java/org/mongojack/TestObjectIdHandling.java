@@ -16,8 +16,7 @@
  */
 package org.mongojack;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
@@ -539,4 +538,43 @@ public class TestObjectIdHandling extends MongoDBTestBase {
 
     }
 
+    @Test
+    public void testComplexObjectIdGenerated() {
+        ComplexObjectId object = new ComplexObjectId();
+
+        JacksonMongoCollection<ComplexObjectId> coll = getCollection(ComplexObjectId.class);
+
+        coll.insert(object);
+        /*
+        TODO
+        org.bson.types.ObjectId id = new ObjectId(coll.findOne().getId().toString());
+        ComplexObjectId result = coll.findOneById(id);
+        assertThat(result._id._id, equalTo(id));
+        assertThat(getUnderlyingCollection(coll).find().first().get("_id"), equalTo(id));
+
+         */
+    }
+
+    public static class FakeId {
+        public String val;
+
+    }
+
+    public static class ComplexObjectId {
+
+        @JsonProperty("_id")
+        private FakeId _id;
+
+        @JsonSetter("_id")
+        public void setId(String id) {
+            this._id = new FakeId();
+            this._id.val = id;
+        }
+
+        @JsonGetter("_id")
+        public Object getId() {
+            return _id == null ? null : new ObjectId(_id.val);
+        }
+
+    }
 }
