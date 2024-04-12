@@ -10,3 +10,4 @@ bin
 .classpath
 .settings
 .tool-versions
+settings.xml
